@@ -1,23 +1,51 @@
+const _Node = require("../Node/Node");
+
 class Queue {
   constructor() {
-    // Set initial data.
+    this.first = null;
+    this.last = null;
   }
 
   enqueue(data) {
-    // Add some data to the queue.
+    const node = new _Node(data, null);
+
+    if (this.first === null) {
+      this.first = node;
+    }
+
+    if (this.last) {
+      this.last.next = node;
+    }
+
+    this.last = node;
   }
 
   dequeue() {
-    // Remove some data from the queue.
+    if (!this.first) {
+      return;
+    }
+    const node = this.first;
+    this.first = this.first.next;
+
+    if (node === this.last) {
+      this.last = null;
+    }
+    return node.data;
   }
 
   show() {
-    // Return the next item in the queue.
+    return this.first.data;
   }
 
   all() {
-    // Return all items in the queue.
+    let result = [];
+    let currNode = this.first;
+    while (currNode) {
+      result.push(currNode.data);
+      currNode = currNode.next;
+    }
+    return result;
   }
 }
 
-module.exports = Queue
+module.exports = Queue;
